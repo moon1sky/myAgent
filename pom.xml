@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.cn.agent</groupId>
+    <artifactId>myAgent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>testadmin</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.20.0-GA</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <!--自动添加META-INF/MANIFEST.MF ,防止被Maven自动覆盖-->
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                        <manifestEntries>
+                            <!--第一种：premani方式 配合MANIFEST.MF_pre_bak文件-->
+                            <!--<Premain-Class>com.cn.preagent.PreMainTraceAgent</Premain-Class>-->
+                            <!--<Agent-Class>com.cn.preagent.PreMainTraceAgent</Agent-Class>-->
+                            <!--<Can-Redefine-Classes>true</Can-Redefine-Classes>-->
+                            <!--<Can-Retransform-Classes>true</Can-Retransform-Classes>-->
+
+                            <!--第二种：非premani方式,配合MANIFEST.MF_after_bak-->
+                            <Agent-Class>com.cn.afteragent.AfterMainTraceAgent</Agent-Class>
+                            <Can-Redefine-Classes>true</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>true</Can-Retransform-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
